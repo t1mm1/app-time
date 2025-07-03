@@ -1,0 +1,110 @@
+version: '3'
+
+services:
+  fromntend:
+    # Container name.
+    container_name: app-time-frontend
+
+    # Use 'image:<image_name>' for image from docker hub (if you already uploaded it).
+    image: pkasianov/app-time-frontend:latest
+
+    # Use 'build:<path to Dockerfile>' if you want to build image on 'docker-compose up' command.
+    # build: ./frontend
+
+    # Set ports.
+    # 3000 for external (browser, etc), 3000 for internal (container).
+    # For websockets you need to set them equal like a 3000:3000.
+    # It needs because we use dev mode and possible can change mjs files for some updated in the code.
+    # For live version you can set is as 3333:3000.
+    ports:
+      - '3000:3000'
+
+    # Restart container in case when container was stopped.
+    restart: always
+
+    # Dependencies of another serivces.
+    depends_on:
+      - api
+  api:
+    # Container name.
+    container_name: app-time-api
+
+    # Use 'image:<image_name>' for image from docker hub (if you already uploaded it).
+    image: pkasianov/app-time-api:latest
+
+    # Use 'build:<path to Dockerfile>' if you want to build image on 'docker-compose up' command.
+    # build: ./api
+
+    # Set ports.
+    # 5555 for external (browser, etc), 5000 for internal (container).
+    ports:
+      - '5555:5000'
+    
+    # Restart container in case when container was stopped.
+    restart: always
+
+    # Dependencies of another serivces.
+    depends_on:
+      mysql:
+        condition: service_healthy
+
+    # Dependencies of another serivces. 
+    # Simple variant.
+    # depends_on:
+    #   - mysql
+  mysql:
+    # Container name.
+    container_name: app-time-mysql
+
+    # For mysql service we using image from docker hub.
+    image: mysql
+
+    # For mysql we will use standart 3306.
+    # In this case no need add option ports.
+    # We no need access to the database from outside, and this is also a reason why no need add ports.
+
+    # Variables of enviroment.
+    environment:
+      # Set password (required).
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      # Set database (required).
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+    
+    # Add volume of databse.
+    # Name of volume is 'mysql_database'.
+    volumes:
+      - mysql_database:/var/lib/mysql
+    # Restart container in case when container was stopped.
+    restart: always
+
+    # This option make cheking if mysql service was run or not.
+    healthcheck:
+      test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost"]
+      timeout: 20s
+      retries: 10
+  adminer:
+    # Container name.
+    container_name: app-time-adminer
+
+    # For aminer service we using image from docker hub.
+    image: adminer
+
+    # Set ports.
+    # 8881 for external (browser, etc), 8080 for internal (container).
+    # Be sure that port 8881 is free in your system.
+    # Here no need to set them equal like a 8080:8080.
+    # Use 8881:8080.
+    ports:
+      - '8881:8080'
+
+    # Restart container in case when container was stopped.
+    restart: always
+
+    # Dependencies of another serivces.
+    depends_on:
+      - mysql
+
+# Init volume.
+volumes:
+  # Init volume for mysql database.
+  mysql_database:
