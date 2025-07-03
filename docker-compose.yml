@@ -1,7 +1,7 @@
 version: '3'
 
 services:
-  fromntend:
+  frontend:
     # Container name.
     container_name: app-time-frontend
 
@@ -18,6 +18,13 @@ services:
     # For live version you can set is as 3333:3000.
     ports:
       - '3000:3000'
+
+    # Add volume of app's files.
+    # We also add app/node_modules because we dont have this folder in volume.
+    # The 'frontend' folder on volume side, 'app' folder on container side.
+    volumes:
+      - /app/node_modules
+      - ./frontend:/app
 
     # Restart container in case when container was stopped.
     restart: always
@@ -39,6 +46,13 @@ services:
     # 5555 for external (browser, etc), 5000 for internal (container).
     ports:
       - '5555:5000'
+
+    # Add volume of app's files.
+    # We also add app/node_modules because we dont have this folder in volume.
+    # 'api' folder on volume side, 'app' folder on container side.
+    volumes:
+      - /app/node_modules
+      - ./api:/app
     
     # Restart container in case when container was stopped.
     restart: always
@@ -74,6 +88,7 @@ services:
     # Name of volume is 'mysql_database'.
     volumes:
       - mysql_database:/var/lib/mysql
+
     # Restart container in case when container was stopped.
     restart: always
 
