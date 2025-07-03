@@ -38,9 +38,16 @@ services:
 
     # Use 'image:<image_name>' for image from docker hub (if you already uploaded it).
     image: pkasianov/app-time-api:latest
-
     # Use 'build:<path to Dockerfile>' if you want to build image on 'docker-compose up' command.
     # build: ./api
+
+    # Variables of enviroment.
+    environment:
+      MYSQL_HOST: ${MYSQL_HOST}
+      MYSQL_PORT: ${MYSQL_PORT}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASS: ${MYSQL_PASS}
+      MYSQL_NAME: ${MYSQL_NAME}
 
     # Set ports.
     # 5555 for external (browser, etc), 5000 for internal (container).
@@ -80,9 +87,9 @@ services:
     # Variables of enviroment.
     environment:
       # Set password (required).
-      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_PASS}
       # Set database (required).
-      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_DATABASE: ${MYSQL_NAME}
     
     # Add volume of databse.
     # Name of volume is 'mysql_database'.
