@@ -16,7 +16,9 @@ This is simple example of k8s integration for app-time application.
 
 ### 1. Start Minikube
 
+```
 minikube start
+```
 
 ### 2. Apply Kubernetes manifests
 
