@@ -1,5 +1,11 @@
 # Time Application
 
+This application was originally developed as part of a Docker course, with a primary focus on using Docker Compose for orchestration and development. For added flexibility, Kubernetes manifests are also provided, enabling you to deploy the application on Kubernetes platforms such as Minikube.
+
+For additional details and step-by-step guidance, check out the related courses:
+Kubernetes Course: https://www.udemy.com/course/kubernetes-ru (Bogdan Stashchuk)
+Docker Course: https://www.udemy.com/course/docker-ru (Bogdan Stashchuk)
+
 ## Support k8s running.
 
 This is simple example of k8s integration for app-time application.
