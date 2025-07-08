@@ -3,10 +3,12 @@
 This application was originally developed as part of a Docker course, with a primary focus on using Docker Compose for orchestration and development. For added flexibility, Kubernetes manifests are also provided, enabling you to deploy the application on Kubernetes platforms such as Minikube.
 
 For additional details and step-by-step guidance, check out the related courses:
+
 Kubernetes Course: https://www.udemy.com/course/kubernetes-ru (Bogdan Stashchuk)
+
 Docker Course: https://www.udemy.com/course/docker-ru (Bogdan Stashchuk)
 
-## Support k8s running.
+## Support k8s
 
 This is simple example of k8s integration for app-time application.
 
@@ -18,7 +20,7 @@ minikube start
 
 ### 2. Apply Kubernetes manifests
 
-Be sure to set your own password and database name in secrets.yaml before applying!
+Be sure to set your own password and database name in secrets.yml before applying!
 
 ```
 kubectl apply -f namespace.yml -f secrets.yml -f mysql-pvc.yml -f mysql.yml -f api.yml -f frontend.yml -f adminer.yml
@@ -59,4 +61,12 @@ The default Kubernetes namespace is app-time.
 
 ```
 kubectl delete namespace app-time
+```
+
+## Support Composer
+
+You can start it via composer file
+
+```
+docker compose up -d
 ```
